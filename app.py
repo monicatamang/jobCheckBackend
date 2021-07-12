@@ -1,12 +1,18 @@
 from flask import Flask
-from users import create_user
+from users import create_user, update_user
 import sys
 
 app = Flask(__name__)
 
+# Creating a POST request that will create a user
 @app.post("/api/users")
 def call_create_user():
     return create_user.signup_user()
+
+# Creating a PATCH request that will update a user
+@app.patch("/api/users")
+def call_update_user():
+    return update_user.update_user()
 
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode
