@@ -5,7 +5,7 @@ import dbconnect
 import dbcheck
 import secrets
 
-def get_user_token(user_id):
+def create_user_token(user_id):
     # Opening the database and creating a cursor
     conn = dbconnect.open_db_connection()
     cursor = dbconnect.create_db_cursor(conn)

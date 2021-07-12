@@ -1,12 +1,13 @@
 from flask import Flask
 from users import create_user, update_user, delete_user
+from login import create_login
 import sys
 
 app = Flask(__name__)
 
-# Creating a POST request that will create a user
+# Creating a POST request that will sign up a user
 @app.post("/api/users")
-def call_create_user():
+def call_signup_user():
     return create_user.signup_user()
 
 # Creating a PATCH request that will update a user
@@ -18,6 +19,11 @@ def call_update_user():
 @app.delete("/api/users")
 def call_delete_user():
     return delete_user.delete_user()
+
+# Creating a POST request that will log in a user
+@app.post("/api/login")
+def call_create_login():
+    return create_login.login_user()
 
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode

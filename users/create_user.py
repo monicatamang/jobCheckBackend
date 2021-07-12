@@ -16,7 +16,7 @@ def signup_user():
         email = request.json['email']
         password = request.json['password']
         
-        # If the user sends back data without content, send a client error response
+        # If the user sends back data without content, return a client error response
         if(first_name == "" or last_name == "" or email == "" or password == ""):
             return Response("Invalid data.", mimetype="text/plain", status=400)
     except KeyError:
@@ -45,7 +45,7 @@ def signup_user():
         return Response("Failed to create a user.", mimetype="text/plain", status=500)
     # If a new id is created, get the user's login token
     else:
-        token = user_token.get_user_token(user_id)
+        token = user_token.create_user_token(user_id)
         # If a login token is not created, send a server error response
         if(token == None):
             return Response("Failed to log in user.", mimetype="text/plain", status=500)
@@ -60,5 +60,5 @@ def signup_user():
             }
             # Converting the user's data into JSON data
             user_data_json = json.dumps(user_data, default=str)
-            # Send a client success response with the JSON data
+            # Sending a client success response with the JSON data
             return Response(user_data_json, mimetype="application/json", status=201)
