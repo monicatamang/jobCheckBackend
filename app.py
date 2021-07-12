@@ -1,5 +1,5 @@
 from flask import Flask
-from users import create_user, update_user
+from users import create_user, update_user, delete_user
 import sys
 
 app = Flask(__name__)
@@ -13,6 +13,11 @@ def call_create_user():
 @app.patch("/api/users")
 def call_update_user():
     return update_user.update_user()
+
+# Creating a DELETE request that will delete a user
+@app.delete("/api/users")
+def call_delete_user():
+    return delete_user.delete_user()
 
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode

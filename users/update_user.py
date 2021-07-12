@@ -16,7 +16,7 @@ def update_user():
         password = request.json.get('password')
     except KeyError:
         traceback.print_exc()
-        return Response("Incorrect or missing key.", mimetype="text/plain", status=400)
+        return Response("Incorrect or missing key.", mimetype="text/plain", status=401)
     except:
         traceback.print_exc()
         return Response("Sorry, something went wrong. Please try again.", mimetype="text/plain", status=400)
