@@ -1,6 +1,7 @@
 from flask import Flask
 from users import create_user, update_user, delete_user
 from login import create_login, delete_login
+from job_applications import create_job_app
 import sys
 
 app = Flask(__name__)
@@ -29,6 +30,11 @@ def call_login_user():
 @app.delete("/api/login")
 def call_logout_user():
     return delete_login.logout_user()
+
+# Creating a POST request that will create a job application
+@app.post("/api/job-applications")
+def call_create_job_app():
+    return create_job_app.create_job_app()
 
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode

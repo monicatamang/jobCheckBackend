@@ -15,7 +15,7 @@ def login_user():
         password = request.json['password']
 
         # If the user sends an email or password without content, return a client error response
-        if(email == "" or password == ""):
+        if(email == '' or password == ''):
             return Response("Invalid data.", mimetype="text/plain", status=400)
     except KeyError:
         traceback.print_exc()

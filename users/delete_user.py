@@ -12,7 +12,7 @@ def delete_user():
         password = request.json['password']
 
         # If the user sends a login token or password without content, return a client error response
-        if(login_token == "" or password == ""):
+        if(login_token == '' or password == ''):
             return Response("Invalid data.", mimetype="text/plain", status=400)
     except KeyError:
         traceback.print_exc()

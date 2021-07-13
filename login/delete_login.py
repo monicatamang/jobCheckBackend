@@ -8,8 +8,8 @@ def logout_user():
     try:
         login_token = request.json['loginToken']
 
-        # If the user send a login token without content
-        if(login_token == ""):
+        # If the user sends a login token without content
+        if(login_token == ''):
             return Response("Invalid login token.", mimetype="text/plain", status=401)
     except KeyError:
         traceback.print_exc()

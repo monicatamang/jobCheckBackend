@@ -17,7 +17,7 @@ def signup_user():
         password = request.json['password']
         
         # If the user sends back data without content, return a client error response
-        if(first_name == "" or last_name == "" or email == "" or password == ""):
+        if(first_name == '' or last_name == '' or email == '' or password == ''):
             return Response("Invalid data.", mimetype="text/plain", status=400)
     except KeyError:
         traceback.print_exc()
