@@ -3,6 +3,7 @@ from users import create_user, update_user, delete_user
 from login import create_login, delete_login
 from job_applications import get_job_app, create_job_app, update_job_app, delete_job_app
 from interviews import get_interview, create_interview, update_interview, delete_interview
+from interviewers import create_interviewer, update_interviewer
 import sys
 
 app = Flask(__name__)
@@ -71,6 +72,16 @@ def call_update_interview():
 @app.delete("/api/interviews")
 def call_delete_interview():
     return delete_interview.delete_interview()
+
+# Creating a POST request that will create an interviewer
+@app.post("/api/interviewers")
+def call_create_interviewer():
+    return create_interviewer.create_interviewer()
+
+# Creating a PATCH request that will update an interviewer
+@app.patch("/api/interviewers")
+def call_update_interviewer():
+    return update_interviewer.update_interviewer()
 
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode
