@@ -1,7 +1,7 @@
 from flask import Flask
 from users import create_user, update_user, delete_user
 from login import create_login, delete_login
-from job_applications import get_job_app, create_job_app, update_job_app
+from job_applications import get_job_app, create_job_app, update_job_app, delete_job_app
 import sys
 
 app = Flask(__name__)
@@ -41,9 +41,15 @@ def call_get_job_app():
 def call_create_job_app():
     return create_job_app.create_job_app()
 
+# Creating a PATCH request that will update a user's job application
 @app.patch("/api/job-applications")
 def call_update_job_app():
     return update_job_app.update_job_app()
+
+# Creating a DELETE request that will delete a user's job application
+@app.delete("/api/job-applications")
+def call_delete_app():
+    return delete_job_app.delete_job_app()
 
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode
