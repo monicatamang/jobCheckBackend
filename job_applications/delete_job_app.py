@@ -1,4 +1,4 @@
-from flask import app, request, Response
+from flask import request, Response
 import traceback
 import dbstatements
 

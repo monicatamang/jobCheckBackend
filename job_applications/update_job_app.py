@@ -1,4 +1,4 @@
-from flask import app, request, Response
+from flask import request, Response
 import traceback
 import dbstatements
 import json
@@ -11,12 +11,12 @@ def update_job_app():
         job_app_id = int(request.json['jobAppId'])
         company = request.json.get('company')
         job_posting_url = request.json.get('jobPostingUrl')
-        job_position = request.json.get('position')
-        job_location = request.json.get('location')
+        job_position = request.json.get('jobPosition')
+        job_location = request.json.get('jobLocation')
         employment_type = request.json.get('employmentType')
         salary_type = request.json.get('salaryType')
         salary_amount = request.json.get('salaryAmount')
-        start_date = request.json.get('startDate')
+        start_date = request.json.get('jobStartDate')
         due_date = request.json.get('dueDate')
         job_app_status = request.json.get('status')
         applied_date = request.json.get('appliedDate')
@@ -99,12 +99,12 @@ def update_job_app():
                 'jobAppId': updated_job_app_list[0][0],
                 'company': updated_job_app_list[0][1],
                 'jobPostingUrl': updated_job_app_list[0][2],
-                'position': updated_job_app_list[0][3],
-                'location': updated_job_app_list[0][4],
+                'jobPosition': updated_job_app_list[0][3],
+                'jobLocation': updated_job_app_list[0][4],
                 'employmentType': updated_job_app_list[0][5],
                 'salaryType': updated_job_app_list[0][6],
                 'salaryAmount': updated_job_app_list[0][7],
-                'startDate': updated_job_app_list[0][8],
+                'jobStartDate': updated_job_app_list[0][8],
                 'dueDate': updated_job_app_list[0][9],
                 'status': updated_job_app_list[0][10],
                 'appliedDate': updated_job_app_list[0][11],

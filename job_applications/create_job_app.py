@@ -10,12 +10,12 @@ def create_job_app():
         login_token = request.json['loginToken']
         company = request.json['company']
         job_posting_url = request.json.get('jobPostingUrl')
-        job_position = request.json['position']
-        job_location = request.json.get('location')
+        job_position = request.json['jobPosition']
+        job_location = request.json.get('jobLocation')
         employment_type = request.json.get('employmentType')
         salary_type = request.json.get('salaryType')
         salary_amount = request.json.get('salaryAmount')
-        start_date = request.json.get('startDate')
+        start_date = request.json.get('jobStartDate')
         due_date = request.json.get('dueDate')
         job_app_status = request.json.get('status')
         applied_date = request.json.get('appliedDate')
@@ -48,12 +48,12 @@ def create_job_app():
                 'jobAppId': job_app_id,
                 'company': company,
                 'jobPostingUrl': job_posting_url,
-                'position': job_position,
-                'location': job_location,
+                'jobPosition': job_position,
+                'jobLocation': job_location,
                 'employmentType': employment_type,
                 'salaryType': salary_type,
                 'salaryAmount': salary_amount,
-                'startDate': start_date,
+                'jobStartDate': start_date,
                 'dueDate': due_date,
                 'status': job_app_status,
                 'appliedDate': applied_date,
