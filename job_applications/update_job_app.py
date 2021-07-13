@@ -92,10 +92,11 @@ def update_job_app():
 
     # If the user's job application is updated, get the updated job application from the database
     if(row_count == 1):
-        updated_job_app_list = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_posting_url, ja.job_position, ja.job_location, ja.employment_type, ja.salary_type, ja.salary_amount, ja.start_date, ja.due_date, ja.status, ja.applied_date, ja.notes FROM user_session us INNER JOIN job_application ja ON ja.user_id = us.user_id WHERE us.token = ? AND ja.id = ?", [login_token, job_app_id])
+        updated_job_app_list = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_posting_url, ja.job_position, ja.job_location, ja.employment_type, ja.salary_type, ja.salary_amount, ja.start_date, ja.due_date, ja.status, ja.applied_date, ja.notes, ja.user_id FROM user_session us INNER JOIN job_application ja ON ja.user_id = us.user_id WHERE us.token = ? AND ja.id = ?", [login_token, job_app_id])
         # If the updated job application is retrieved from the database, send the updated job application as a dictionary
         if(len(updated_job_app_list) == 1):
             updated_job_app = {
+                'user_id': updated_job_app_list[0][13],
                 'jobAppId': updated_job_app_list[0][0],
                 'company': updated_job_app_list[0][1],
                 'jobPostingUrl': updated_job_app_list[0][2],

@@ -2,7 +2,7 @@ from flask import Flask
 from users import create_user, update_user, delete_user
 from login import create_login, delete_login
 from job_applications import get_job_app, create_job_app, update_job_app, delete_job_app
-from interviews import create_interview, update_interview, delete_interview
+from interviews import get_interview, create_interview, update_interview, delete_interview
 import sys
 
 app = Flask(__name__)
@@ -51,6 +51,11 @@ def call_update_job_app():
 @app.delete("/api/job-applications")
 def call_delete_app():
     return delete_job_app.delete_job_app()
+
+# Creating GET request that will get a user's interviews
+@app.get("/api/interviews")
+def call_get_interviews():
+    return get_interview.get_interviews()
 
 # Creating POST request that will create an interview
 @app.post("/api/interviews")

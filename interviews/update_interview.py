@@ -72,10 +72,11 @@ def update_interview():
 
     # If the user's interview updated in the database, get the updated interview
     if(row_count == 1):
-        updated_interview_list = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes FROM user_session us INNER JOIN job_application ja ON ja.user_id = us.user_id INNER JOIN interview i ON i.job_app_id = ja.id WHERE us.token = ? AND i.id = ?", [login_token, interview_id])
+        updated_interview_list = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.user_id FROM user_session us INNER JOIN job_application ja ON ja.user_id = us.user_id INNER JOIN interview i ON i.job_app_id = ja.id WHERE us.token = ? AND i.id = ?", [login_token, interview_id])
         # If the updated interview is retrieved from the database, send the updated interview as a dicionary
         if(len(updated_interview_list) == 1):
             updated_interview = {
+                'user_id': updated_interview_list[0][10],
                 'interviewId': interview_id,
                 'jobAppId': updated_interview_list[0][0],
                 'company': updated_interview_list[0][1],
