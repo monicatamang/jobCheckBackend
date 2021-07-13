@@ -24,7 +24,7 @@ def update_job_app():
         
         # If the user sends a login token without content, return a server error response
         if(login_token == ''):
-            return Response("User is not logged in.", mimetype="text/plain", status=403)
+            return Response("Invalid login token.", mimetype="text/plain", status=403)
     except ValueError:
         traceback.print_exc()
         return Response("Invalid data.", mimetype="text/plain", status=400)
