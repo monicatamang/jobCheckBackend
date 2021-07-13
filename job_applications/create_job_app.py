@@ -1,4 +1,3 @@
-import re
 from flask import request, Response
 import traceback
 import dbstatements

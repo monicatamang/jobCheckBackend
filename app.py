@@ -1,7 +1,7 @@
 from flask import Flask
 from users import create_user, update_user, delete_user
 from login import create_login, delete_login
-from job_applications import create_job_app
+from job_applications import get_job_app, create_job_app
 import sys
 
 app = Flask(__name__)
@@ -30,6 +30,11 @@ def call_login_user():
 @app.delete("/api/login")
 def call_logout_user():
     return delete_login.logout_user()
+
+# Creating a GET request that will get a user's job applications
+@app.get("/api/job-applications")
+def call_get_job_app():
+    return get_job_app.get_job_app()
 
 # Creating a POST request that will create a job application
 @app.post("/api/job-applications")
