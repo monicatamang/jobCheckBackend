@@ -19,12 +19,9 @@ def create_job_ref():
         phone_number = request.json.get('phoneNumber')
         notes = request.json.get('notes')
 
-        # If the user sends a login token, name, position, city or province without content, send a client error response
+        # If the user sends the required data without content, send a client error response
         if(login_token == '' or name == '' or position == '' or city == '' or province == ''):
             return Response("Invalid data.", mimetype="text/plain", status=403)
-    except ValueError:
-        traceback.print_exc()
-        return Response("Invalid data.", mimetype="text/plain", status=400)
     except KeyError:
         traceback.print_exc()
         return Response("Incorrect or missing key.", mimetype="text/plain", status=401)

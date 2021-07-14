@@ -21,7 +21,7 @@ def create_job_app():
         applied_date = request.json.get('appliedDate')
         notes = request.json.get('notes')
 
-        # If the user sends a login token, company or job position without content, send a client error response
+        # If the user sends the required data without content, send a client error response
         if(login_token == '' or company == '' or job_position == ''):
             return Response("Invalid data.", mimetype="text/plain", status=400)
     except KeyError:

@@ -26,7 +26,7 @@ def get_interviewers():
     # If the user does not send an interviewer id, get all interviewers that belong to the user id
     if(interviewer_id == None):
         interviewers = dbstatements.run_select_statement("SELECT ja.company, i2.id, i2.interview_id, i2.job_app_id, i2.name, i2.job_position, i2.email, i2.phone_number, i2.other_contact_info, i2.notes FROM job_application ja INNER JOIN interviewer i2 ON i2.job_app_id = ja.id WHERE i2.user_id = ? ORDER BY i2.created_at DESC", [user_id,])
-    # If the user does send an interviewer id, get the interviewer that is owned by the user id and has the interviewer id
+    # If the user does send an interviewer id, get the interviewer that belongs to the user id and has the interviewer id
     else:
         interviewers = dbstatements.run_select_statement("SELECT ja.company, i2.id, i2.interview_id, i2.job_app_id, i2.name, i2.job_position, i2.email, i2.phone_number, i2.other_contact_info, i2.notes FROM job_application ja INNER JOIN interviewer i2 ON i2.job_app_id = ja.id WHERE i2.user_id = ? AND i2.id = ? ORDER BY i2.created_at DESC", [user_id, interviewer_id])
 

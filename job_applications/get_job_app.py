@@ -23,10 +23,10 @@ def get_job_app():
         traceback.print_exc()
         return Response("Sorry, something went wrong. Please try again.", mimetype="text/plain", status=400)
 
-    # If the user does not send a job application id, get all job applications that are owned by the user id
+    # If the user does not send a job application id, get all job applications that belong to the user id
     if(job_app_id == None):
         job_apps = dbstatements.run_select_statement("SELECT id, company, job_posting_url, job_position, job_location, employment_type, salary_type, salary_amount, start_date, due_date, status, applied_date, notes FROM job_application WHERE user_id = ? ORDER BY created_at DESC", [user_id,])
-    # If the user does send a job application id, get the job application that are owned by the user id and has the job application id
+    # If the user does send a job application id, get the job application that belongs to the user id and has the job application id
     else:
         job_apps = dbstatements.run_select_statement("SELECT id, company, job_posting_url, job_position, job_location, employment_type, salary_type, salary_amount, start_date, due_date, status, applied_date, notes FROM job_application WHERE user_id = ? AND id = ? ORDER BY created_at DESC", [user_id, job_app_id])
 
