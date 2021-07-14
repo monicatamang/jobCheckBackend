@@ -49,7 +49,7 @@ def create_job_ref():
                 'name': name,
                 'position': position,
                 'companyName': company_name,
-                'company_address': company_address,
+                'companyAddress': company_address,
                 'postalCode': postal_code,
                 'city': city,
                 'province': province,
