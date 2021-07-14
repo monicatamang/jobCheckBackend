@@ -4,9 +4,13 @@ from login import create_login, delete_login
 from job_applications import get_job_app, create_job_app, update_job_app, delete_job_app
 from interviews import get_interview, create_interview, update_interview, delete_interview
 from interviewers import get_interviewer, create_interviewer, update_interviewer, delete_interviewer
+from resume import upload_resume
 import sys
 
 app = Flask(__name__)
+
+# Limiting the maximum allowed payload to 10MB
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1000 * 1000
 
 # Creating a POST request that will sign up a user
 @app.post("/api/users")
@@ -93,6 +97,11 @@ def call_update_interviewer():
 def call_delete_interviewer():
     return delete_interviewer.delete_interviewer()
 
+# Creating a POST request that will allow user's to upload their resume
+@app.post('/api/upload-resume')
+def call_upload_file():
+    return upload_resume.store_file()
+
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode
 if(len(sys.argv) > 1):
@@ -114,5 +123,5 @@ elif(mode == "testing"):
     app.run(debug=True)
 # If the application is not passed a valid mode, print a message and exit the application
 else:
-    print("Invalid mode, please select either 'production' or 'testing'.")
+    print("Invalid mode, please select either 'production' or 'testing'")
     exit()
