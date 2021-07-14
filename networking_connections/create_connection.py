@@ -41,32 +41,26 @@ def create_networking_connection():
         # If a networking connection id is not created, send a server error response
         if(connection_id == None):
             return Response("Failed to create networking connection.", mimetype="text/plain", status=500)
-        # If a networking connection is is created, get the new networking connection from the database
+        # If a networking connection is is created, send the new networking connection as a dictionary
         else:
-            networking_connection_list = dbstatements.run_select_statement("SELECT name, company, connection_role, email, phone_number, linkedIn, website, other, notes FROM networking_connection WHERE user_id = ? AND id = ?", [user_id_list[0][0], connection_id])
-            # If the new networking connection is retrieved from the database, send the new networking connection as a dictionary
-            if(len(networking_connection_list) == 1):
-                networking_connection = {
-                    'userId': user_id_list[0][0],
-                    'connectionId': connection_id,
-                    'networkingEventId': networking_event_id,
-                    'name': networking_connection_list[0][0],
-                    'company': networking_connection_list[0][1],
-                    'role': networking_connection_list[0][2],
-                    'email': networking_connection_list[0][3],
-                    'phoneNumber': networking_connection_list[0][4],
-                    'linkedIn': networking_connection_list[0][5],
-                    'website': networking_connection_list[0][6],
-                    'other': networking_connection_list[0][7],
-                    'notes': networking_connection_list[0][8]
-                }
-                # Converting the new networking connnection into JSON data
-                networking_connection_json = json.dumps(networking_connection, default=str)
-                # Sending a client success response with the JSON data
-                return Response(networking_connection_json, mimetype="application/json")
-            # If the new networking connection is not retrieved from the database, send a server error response
-            else:
-                return Response("Something went wrong. Please refresh the page.", mimetype="text/plain", status=500)
+            networking_connection = {
+                'userId': user_id_list[0][0],
+                'connectionId': connection_id,
+                'networkingEventId': networking_event_id,
+                'name': name,
+                'company': company,
+                'role': role,
+                'email': email,
+                'phoneNumber': phone_number,
+                'linkedIn': linkedIn,
+                'website': website,
+                'other': other,
+                'notes': notes
+            }
+            # Converting the new networking connnection into JSON data
+            networking_connection_json = json.dumps(networking_connection, default=str)
+            # Sending a client success response with the JSON data
+            return Response(networking_connection_json, mimetype="application/json")
     # If the user's id is not retrieved from the database, send a client error response
     else:
         return Response("User is not logged in.", mimetype="text/plain", status=403)
