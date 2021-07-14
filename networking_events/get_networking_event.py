@@ -25,10 +25,10 @@ def get_networking_events():
 
     # If the user does not send a networking event id, get all networking events that belong to the user id
     if(networking_event_id == None):
-        networking_events = dbstatements.run_select_statement("SELECT id, event_name, event_date, start_time, start_time_period, end_time, end_time_period, time_zone, event_type, event_location, status, notes FROM networking_event WHERE user_id = ?", [user_id,])
+        networking_events = dbstatements.run_select_statement("SELECT id, event_name, event_date, start_time, start_time_period, end_time, end_time_period, time_zone, event_type, event_location, status, notes FROM networking_event WHERE user_id = ? ORDER BY created_at DESC", [user_id,])
     # If the user does send a networking event id, get the networking event that belongs to the user id and has the networking event id
     else:
-        networking_events = dbstatements.run_select_statement("SELECT id, event_name, event_date, start_time, start_time_period, end_time, end_time_period, time_zone, event_type, event_location, status, notes FROM networking_event WHERE user_id = ? AND id = ?", [user_id, networking_event_id])
+        networking_events = dbstatements.run_select_statement("SELECT id, event_name, event_date, start_time, start_time_period, end_time, end_time_period, time_zone, event_type, event_location, status, notes FROM networking_event WHERE user_id = ? AND id = ? ORDER BY created_at DESC", [user_id, networking_event_id])
 
     # If the networking events are not retrieved from the database, send a server error response
     if(networking_events == None):

@@ -6,6 +6,7 @@ from interviews import get_interview, create_interview, update_interview, delete
 from interviewers import get_interviewer, create_interviewer, update_interviewer, delete_interviewer
 from job_references import get_job_reference, create_job_reference, update_job_reference, delete_job_reference
 from networking_events import get_networking_event, create_networking_event, update_networking_event, delete_networking_event
+from networking_connections import create_connection
 from resume import upload_resume
 import sys
 
@@ -138,6 +139,11 @@ def call_update_networking_event():
 @app.delete("/api/networking-events")
 def call_delete_networking_event():
     return delete_networking_event.delete_networking_event()
+
+# Creating a POST request that will create a networking connection
+@app.post("/api/networking-connections")
+def call_create_networking_connection():
+    return create_connection.create_networking_connection()
 
 # Creating a POST request that will allow user's to upload their resume
 @app.post('/api/upload-resume')
