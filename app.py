@@ -7,7 +7,7 @@ from interviewers import get_interviewer, create_interviewer, update_interviewer
 from job_references import get_job_reference, create_job_reference, update_job_reference, delete_job_reference
 from networking_events import get_networking_event, create_networking_event, update_networking_event, delete_networking_event
 from networking_connections import get_connection, create_connection, update_connection, delete_connection
-from resume import upload_resume
+from resume import upload_resume, delete_resume
 import sys
 
 app = Flask(__name__)
@@ -161,9 +161,14 @@ def call_delete_networking_connection():
     return delete_connection.delete_networking_connection()
 
 # Creating a POST request that will allow user's to upload their resume
-@app.post('/api/upload-resume')
+@app.post('/api/resume')
 def call_upload_file():
     return upload_resume.store_file()
+
+# Creating a DELETE request that will delete a user's resume
+@app.delete('/api/resume')
+def call_delete_file():
+    return delete_resume.delete_resume_file()
 
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode
