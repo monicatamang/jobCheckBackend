@@ -26,7 +26,7 @@ def get_interviews():
     # If the user does not send an interview id, get all interviews that are owned by the user id
     if(interview_id == None):
         interviews = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? ORDER BY i.created_at DESC", [user_id,])
-    # If the user does send an interview id, get the interview that is owned by the user id and has that interview id
+    # If the user does send an interview id, get the interview that is owned by the user id and has the interview id
     else:
         interviews = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? AND i.id = ? ORDER BY i.created_at DESC", [user_id, interview_id])
 

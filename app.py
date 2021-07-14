@@ -4,7 +4,7 @@ from login import create_login, delete_login
 from job_applications import get_job_app, create_job_app, update_job_app, delete_job_app
 from interviews import get_interview, create_interview, update_interview, delete_interview
 from interviewers import get_interviewer, create_interviewer, update_interviewer, delete_interviewer
-from job_references import create_job_reference, update_job_reference, delete_job_reference
+from job_references import get_job_reference, create_job_reference, update_job_reference, delete_job_reference
 from resume import upload_resume
 import sys
 
@@ -102,6 +102,11 @@ def call_delete_interviewer():
 @app.post("/api/job-references")
 def call_create_job_ref():
     return create_job_reference.create_job_ref()
+
+# Creating a GET request that will get a user's job references
+@app.get("/api/job-references")
+def call_get_job_ref():
+    return get_job_reference.get_job_ref()
 
 # Creating a PATCH request that will update a job reference
 @app.patch("/api/job-references")
