@@ -5,7 +5,7 @@ from job_applications import get_job_app, create_job_app, update_job_app, delete
 from interviews import get_interview, create_interview, update_interview, delete_interview
 from interviewers import get_interviewer, create_interviewer, update_interviewer, delete_interviewer
 from job_references import get_job_reference, create_job_reference, update_job_reference, delete_job_reference
-from networking_events import create_networking_event
+from networking_events import create_networking_event, update_networking_event
 from resume import upload_resume
 import sys
 
@@ -123,6 +123,11 @@ def call_delete_job_ref():
 @app.post("/api/networking-events")
 def call_create_networking_event():
     return create_networking_event.create_networking_event()
+
+# Creating a PATCH request that will update a networking event
+@app.patch("/api/networking-events")
+def call_update_networking_event():
+    return update_networking_event.update_networking_event()
 
 # Creating a POST request that will allow user's to upload their resume
 @app.post('/api/upload-resume')
