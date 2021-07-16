@@ -171,10 +171,15 @@ def call_store_resume_file():
 def call_delete_resume_file():
     return delete_resume.delete_resume_file()
 
-# Creating a POST request that will allow user's to download their resume
-@app.post("/api/download-resume")
-def call_download_file():
-    return download_resume.get_resume_from_db()
+# Creating a GET request that will send the user's resume filename
+@app.get("/api/download-resume")
+def call_get_resume_name_from_db():
+    return download_resume.get_resume_name_from_db()
+
+# Creating a GET request that will allow user's to download their resume
+@app.get("/api/download-resume/<name>")
+def call_download_resume_file(name):
+    return download_resume.download_resume_file(name)
 
 # Creating a POST request that will allow user's to upload their cover letter
 @app.post("/api/upload-cover-letter")

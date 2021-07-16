@@ -63,9 +63,9 @@ def db_upload_resume(filename):
             return Response("Failed to upload resume.", mimetype="text/plain", status=500)
         # If a new resume id is created, get the resume creation date from the database
         else:
-            resume_created_At = dbstatements.run_select_statement("SELECT created_at FROM resume WHERE id = ?", [resume_id,])
+            resume_created_at_list = dbstatements.run_select_statement("SELECT created_at FROM resume WHERE id = ?", [resume_id,])
             # If the resume creation date is not retrieved from the database, send a server error response
-            if(resume_created_At == None):
+            if(resume_created_at_list == None):
                 return Response("Something went wrong. Please refresh the page.", mimetype="text/plain", status=500)
             # If the resume creation date is retrieved from the database, send the user's resume data as a dictionary
             else:
@@ -74,7 +74,7 @@ def db_upload_resume(filename):
                     'resumeId': resume_id,
                     'jobAppId': job_app_id,
                     'resumeFile': filename,
-                    'createdAt': resume_created_At
+                    'createdAt': resume_created_at_list[0][0]
                 }
                 # Converting the user's resume data into JSON data
                 user_resume_file_json = json.dumps(user_resume_file, default=str)
