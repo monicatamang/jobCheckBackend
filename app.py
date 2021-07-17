@@ -8,7 +8,7 @@ from job_references import get_job_reference, create_job_reference, update_job_r
 from networking_events import get_networking_event, create_networking_event, update_networking_event, delete_networking_event
 from networking_connections import get_connection, create_connection, update_connection, delete_connection
 from resumes import upload_resume, delete_resume, download_resume
-from cover_letters import upload_cover_letter, delete_cover_letter
+from cover_letters import upload_cover_letter, delete_cover_letter, download_cover_letter
 import sys
 
 app = Flask(__name__)
@@ -173,8 +173,8 @@ def call_delete_resume_file():
 
 # Creating a GET request that will send the user's resume filename
 @app.get("/api/download-resume")
-def call_get_resume_name_from_db():
-    return download_resume.get_resume_name_from_db()
+def call_get_resume_filename_from_db():
+    return download_resume.get_resume_filename_from_db()
 
 # Creating a GET request that will allow user's to download their resume
 @app.get("/api/download-resume/<name>")
@@ -190,6 +190,16 @@ def call_store_cover_letter_file():
 @app.delete("/api/upload-cover-letter")
 def call_delete_cover_letter_file():
     return delete_cover_letter.delete_cover_letter_file()
+
+# Creating a GET request that will send the user's cover letter filename
+@app.get("/api/download-cover-letter")
+def call_get_cv_filename_from_db():
+    return download_cover_letter.get_cv_filename_from_db()
+
+# Creating a GET request that will allow user's to download their cover letter
+@app.get("/api/download-cover-letter/<name>")
+def call_download_cv_file(name):
+    return download_cover_letter.download_cv_file(name)
 
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode
