@@ -4,7 +4,7 @@ import dbstatements
 import json
 
 # Creating a function that will return the user's job applications based on the company
-def search_job_app():
+def search_interview():
     # Trying to get the user's id and search input
     try:
         user_id = int(request.args['userId'])
@@ -26,9 +26,9 @@ def search_job_app():
     # If the user does not send any data, return a client error response
     if(search_input == None):
         return Response("Please enter a valid search input.", mimetype="text/plain", status=400)
-    # If the user does send data, try to find all the user's job applications that matches or closely matches with their search input
+    # If the user does send data, try to find all the user's interviews that matches or closely matches with their search input
     else:
-        results = dbstatements.run_select_statement("SELECT id, company, job_posting_url, job_position, job_location, employment_type, salary_type, salary_amount, start_date, due_date, status, applied_date, notes FROM job_application WHERE user_id = ? AND company LIKE CONCAT('%', ?, '%') ORDER BY created_at DESC", [user_id, search_input])
+        results = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? AND ja.company LIKE CONCAT('%', ?, '%') ORDER BY i.created_at DESC", [user_id, search_input])
 
     # If a database error occurs, send a server error response
     if(results == None):
@@ -40,19 +40,17 @@ def search_job_app():
         for result in results:
             each_result = {
                 'userId': user_id,
+                'interviewId': result[10],
                 'jobAppId': result[0],
                 'company': result[1],
-                'jobPostingUrl': result[2],
-                'position': result[3],
-                'location': result[4],
-                'employmentType': result[5],
-                'salaryType': result[6],
-                'salaryAmount': result[7],
-                'startDate': result[8],
-                'dueDate': result[9],
-                'status': result[10],
-                'appliedDate': result[11],
-                'notes': result[12]
+                'position': result[2],
+                'interviewDate': result[3],
+                'interviewTime': result[4],
+                'interviewTimePeriod': result[5],
+                'interviewTimeZone': result[6],
+                'interviewType': result[7],
+                'interviewLocation': result[8],
+                'notes': result[9]
             }
             search_results.append(each_result)
         # Convert data into JSON
