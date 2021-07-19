@@ -44,12 +44,12 @@ def get_job_ref():
                 'position': job_ref[2],
                 'companyName': job_ref[3],
                 'companyAddress': job_ref[4],
-                'postalCOde': job_ref[5],
+                'postalCode': job_ref[5],
                 'city': job_ref[6],
                 'province': job_ref[7],
                 'email': job_ref[8],
                 'phoneNumber': job_ref[9],
-                'notes': job_ref[10],
+                'notes': job_ref[10]
             }
             job_refs_list.append(each_job_ref)
         # Converting the job references into JSON data

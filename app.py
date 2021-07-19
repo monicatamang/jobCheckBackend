@@ -9,7 +9,7 @@ from networking_events import get_networking_event, create_networking_event, upd
 from networking_connections import get_connection, create_connection, update_connection, delete_connection
 from resumes import upload_resume, delete_resume, download_resume
 from cover_letters import upload_cover_letter, delete_cover_letter, download_cover_letter
-from search import search_job_app, search_interview, search_networking_event
+from search import search_job_app, search_interview, search_networking_event, search_job_reference
 import sys
 
 app = Flask(__name__)
@@ -216,6 +216,11 @@ def call_search_interview():
 @app.get("/api/search-networking-events")
 def call_search_networking_event():
     return search_networking_event.search_networking_event()
+
+# Creating a GET request that will search and return specific job references
+@app.get("/api/search-job-references")
+def call_search_job_ref():
+    return search_job_reference.search_job_ref()
 
 # Creating a mode
 # If more than one argument is passed, set the second argument as the mode
