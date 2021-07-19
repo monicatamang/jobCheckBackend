@@ -3,7 +3,7 @@ import traceback
 import dbstatements
 import json
 
-# Creating a function that will return the user's job applications based on the company
+# Creating a function that will return the user's job applications based on the company's name
 def search_job_app():
     # Trying to get the user's id and search input
     try:

@@ -50,7 +50,7 @@ def get_networking_events():
                 'eventType': networking_event[7],
                 'eventLocation': networking_event[8],
                 'status': networking_event[9],
-                'notes': networking_event[10],
+                'notes': networking_event[10]
             }
             networking_events_list.append(each_networking_event)
         # Converting the networking events into JSON data

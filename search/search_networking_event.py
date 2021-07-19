@@ -3,8 +3,8 @@ import traceback
 import dbstatements
 import json
 
-# Creating a function that will return the user's interviews based on the company's name
-def search_interview():
+# Creating a function that will return the user's networking event based on the networking event's name
+def search_networking_event():
     # Trying to get the user's id and search input
     try:
         user_id = int(request.args['userId'])
@@ -26,9 +26,9 @@ def search_interview():
     # If the user does not send any data, return a client error response
     if(search_input == None):
         return Response("Please enter a valid search input.", mimetype="text/plain", status=400)
-    # If the user does send data, try to find all the user's interviews that matches or closely matches with their search input
+    # If the user does send data, try to find all the user's networking events that matches or closely matches with their search input
     else:
-        results = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? AND ja.company LIKE CONCAT('%', ?, '%') ORDER BY i.created_at DESC", [user_id, search_input])
+        results = dbstatements.run_select_statement("SELECT id, event_name, event_date, start_time, start_time_period, end_time, end_time_period, time_zone, event_type, event_location, status, notes FROM networking_event WHERE user_id = ? AND event_name LIKE CONCAT('%', ?, '%') ORDER BY created_at DESC", [user_id, search_input])
 
     # If a database error occurs, send a server error response
     if(results == None):
@@ -40,17 +40,18 @@ def search_interview():
         for result in results:
             each_result = {
                 'userId': user_id,
-                'interviewId': result[10],
-                'jobAppId': result[0],
-                'company': result[1],
-                'position': result[2],
-                'interviewDate': result[3],
-                'interviewTime': result[4],
-                'interviewTimePeriod': result[5],
-                'interviewTimeZone': result[6],
-                'interviewType': result[7],
-                'interviewLocation': result[8],
-                'notes': result[9]
+                'networkingEventId': result[0],
+                'eventName': result[1],
+                'eventDate': result[2],
+                'startTime': result[3],
+                'startTimePeriod': result[4],
+                'endTime': result[5],
+                'endTimePeriod': result[5],
+                'timeZone': result[6],
+                'eventType': result[7],
+                'eventLocation': result[8],
+                'status': result[9],
+                'notes': result[10]
             }
             search_results.append(each_result)
         # Convert data into JSON
