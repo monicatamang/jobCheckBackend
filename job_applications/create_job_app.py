@@ -17,12 +17,12 @@ def create_job_app():
         salary_amount = request.json.get('salaryAmount')
         start_date = request.json.get('jobStartDate')
         due_date = request.json.get('dueDate')
-        job_app_status = request.json.get('status')
+        job_app_status = request.json['status']
         applied_date = request.json.get('appliedDate')
         notes = request.json.get('notes')
 
         # If the user sends the required data without content, send a client error response
-        if(login_token == '' or company == '' or job_position == ''):
+        if(login_token == '' or company == '' or job_position == '' or job_app_status == ''):
             return Response("Invalid data.", mimetype="text/plain", status=400)
     except KeyError:
         traceback.print_exc()
