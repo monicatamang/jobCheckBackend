@@ -8,11 +8,11 @@ def get_interviews():
     # Trying to get the user's id and interview id
     try:
         user_id = int(request.args['userId'])
-        interview_id = request.args.get('interviewId')
+        job_app_id = request.args.get('jobAppId')
 
         # If the user does send an interview id, convert it into an integer
-        if(interview_id != None and interview_id != ''):
-            interview_id = int(interview_id)
+        if(job_app_id != None and job_app_id != ''):
+            job_app_id = int(job_app_id)
     except ValueError:
         traceback.print_exc()
         return Response("Invalid data.", mimetype="text/plain", status=400)
@@ -24,11 +24,11 @@ def get_interviews():
         return Response("Sorry, something went wrong. Please try again.", mimetype="text/plain", status=400)
 
     # If the user does not send an interview id, get all interviews that belong to the user id
-    if(interview_id == None):
+    if(job_app_id == None):
         interviews = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? ORDER BY i.created_at DESC", [user_id,])
     # If the user does send an interview id, get the interview that belongs the user id and has the interview id
     else:
-        interviews = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? AND i.id = ? ORDER BY i.created_at DESC", [user_id, interview_id])
+        interviews = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? AND ja.id = ? ORDER BY i.created_at DESC", [user_id, job_app_id])
 
     # If the user's interviews are not retrieved from the database, send a server error response
     if(interviews == None):
@@ -42,7 +42,7 @@ def get_interviews():
                 'interviewId': interview[10],
                 'jobAppId': interview[0],
                 'company': interview[1],
-                'position': interview[2],
+                'jobPosition': interview[2],
                 'interviewDate': interview[3],
                 'interviewTime': interview[4],
                 'interviewTimePeriod': interview[5],

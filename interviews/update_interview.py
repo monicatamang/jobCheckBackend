@@ -80,7 +80,7 @@ def update_interview():
                 'interviewId': interview_id,
                 'jobAppId': updated_interview_list[0][0],
                 'company': updated_interview_list[0][1],
-                'position': updated_interview_list[0][2],
+                'jobPosition': updated_interview_list[0][2],
                 'interviewDate': updated_interview_list[0][3],
                 'interviewTime': updated_interview_list[0][4],
                 'interviewTimePeriod': updated_interview_list[0][5],

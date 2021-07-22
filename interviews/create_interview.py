@@ -9,12 +9,12 @@ def create_interview():
     try:
         login_token = request.json['loginToken']
         job_app_id = int(request.json['jobAppId'])
-        interview_date = request.json['date']
-        interview_time = request.json['time']
-        interview_time_period = request.json['timePeriod']
-        interview_time_zone = request.json['timeZone']
-        interview_type = request.json.get('type')
-        interview_location = request.json.get('location')
+        interview_date = request.json['interviewDate']
+        interview_time = request.json['interviewTime']
+        interview_time_period = request.json['interviewTimePeriod']
+        interview_time_zone = request.json['interviewTimeZone']
+        interview_type = request.json.get('interviewType')
+        interview_location = request.json.get('interviewLocation')
         notes = request.json.get('notes')
 
         # If the user sends a login token without content, return a client error response
@@ -44,12 +44,12 @@ def create_interview():
             new_interview = {
                 'interviewId': interview_id,
                 'jobAppId': job_app_id,
-                'date': interview_date,
-                'time': interview_time,
-                'timePeriod': interview_time_period,
-                'timeZone': interview_time_zone,
-                'type': interview_type,
-                'location': interview_location,
+                'interviewDate': interview_date,
+                'interviewTime': interview_time,
+                'interviewTimePeriod': interview_time_period,
+                'interviewTimeZone': interview_time_zone,
+                'interviewType': interview_type,
+                'interviewLocation': interview_location,
                 'notes': notes
             }
             # Converting the new interview into JSON data
