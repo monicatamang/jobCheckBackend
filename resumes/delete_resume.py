@@ -2,7 +2,7 @@ from flask import request, Response
 import traceback
 import dbstatements
 import os
-from app import RESUME_UPLOAD_FOLDER
+from resumes import upload_resume
 
 # Creating a function that deletes a user's resume
 def delete_resume_file():
@@ -29,7 +29,7 @@ def delete_resume_file():
 
     # If the resume file is retrieved from the database, check to see if the user's resume exists in the 'resume_upload' folder
     if(len(resume_file_list) == 1):
-        filename = os.path.join(RESUME_UPLOAD_FOLDER, resume_file_list[0][0])
+        filename = os.path.join(upload_resume.UPLOAD_FOLDER, resume_file_list[0][0])
         # If user's resume exists in the folder, remove the resume from the folder and database
         if(os.path.exists(filename)):
             os.remove(filename)

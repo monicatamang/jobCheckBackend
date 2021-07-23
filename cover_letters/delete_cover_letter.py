@@ -1,9 +1,8 @@
-from _typeshed import StrOrBytesPath
 from flask import request, Response
 import traceback
 import dbstatements
 import os
-from app import RESUME_UPLOAD_FOLDER
+from cover_letters import upload_cover_letter
 
 # Creating a function that deletes a user's cover letter
 def delete_cover_letter_file():
@@ -30,7 +29,7 @@ def delete_cover_letter_file():
 
     # If the resume file is retrieved from the database, check to see fi the user's cover letter exists in the 'cover_letter_upload' folder
     if(len(cover_letter_file_list) == 1):
-        filename = os.path.join(RESUME_UPLOAD_FOLDER, cover_letter_file_list[0][0])
+        filename = os.path.join(upload_cover_letter.UPLOAD_FOLDER, cover_letter_file_list[0][0])
         # If the user's cover letter exists in the folder, remove the resume from the folder and database
         if(os.path.exists(filename)):
             os.remove(filename)

@@ -7,7 +7,7 @@ from interviewers import get_interviewer, create_interviewer, update_interviewer
 from job_references import get_job_reference, create_job_reference, update_job_reference, delete_job_reference
 from networking_events import get_networking_event, create_networking_event, update_networking_event, delete_networking_event
 from networking_connections import get_connection, create_connection, update_connection, delete_connection
-from resumes import upload_resume, delete_resume, download_resume
+from resumes import upload_resume, delete_resume, download_resume, get_resume_from_db
 from cover_letters import upload_cover_letter, delete_cover_letter, download_cover_letter
 from search import search_job_app, search_interview, search_networking_event, search_job_reference
 import sys
@@ -16,13 +16,6 @@ app = Flask(__name__)
 
 # Limiting the maximum allowed payload to be 10MB
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1000 * 1000
-
-# Initializing a folder to store all users' resumes and cover letters
-RESUME_UPLOAD_FOLDER = 'resume_uploads/'
-COVER_LETTER_UPLOAD_FOLDER = 'cover_letter_uploads/'
-
-# Setting a limit on the types of text files users can send
-ALLOWED_EXTENSIONS = {'pdf', 'docx', 'pages', 'txt'}
 
 # Creating a POST request that will sign up a user
 @app.post("/api/users")
@@ -188,6 +181,11 @@ def call_get_resume_filename_from_db():
 @app.get("/api/download-resume/<name>")
 def call_download_resume_file(name):
     return download_resume.download_resume_file(name)
+
+# Creating a GET request that will get the user's resume file data from the database
+@app.get("/api/resume-file")
+def call_get_resume_file():
+    return get_resume_from_db.get_resume_file()
 
 # Creating a POST request that will allow user's to upload their cover letter
 @app.post("/api/upload-cover-letter")
