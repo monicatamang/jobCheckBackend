@@ -45,12 +45,12 @@ def get_networking_events():
                 'startTime': networking_event[3],
                 'startTimePeriod': networking_event[4],
                 'endTime': networking_event[5],
-                'endTimePeriod': networking_event[5],
-                'timeZone': networking_event[6],
-                'eventType': networking_event[7],
-                'eventLocation': networking_event[8],
-                'status': networking_event[9],
-                'notes': networking_event[10]
+                'endTimePeriod': networking_event[6],
+                'timeZone': networking_event[7],
+                'eventType': networking_event[8],
+                'eventLocation': networking_event[9],
+                'eventStatus': networking_event[10],
+                'notes': networking_event[11]
             }
             networking_events_list.append(each_networking_event)
         # Converting the networking events into JSON data

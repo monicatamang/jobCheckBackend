@@ -16,12 +16,12 @@ def create_networking_event():
         end_time_period = request.json.get('endTimePeriod')
         time_zone = request.json['timeZone']
         event_type = request.json.get('eventType')
-        event_location = request.json.get('location')
-        event_status = request.json.get('status')
+        event_location = request.json.get('eventLocation')
+        event_status = request.json['eventStatus']
         notes = request.json.get('notes')
 
         # If the user sends the required data without content, send a client error response
-        if(login_token == '' or event_name == '' or event_date == '' or start_time == '' or start_time_period == '' or time_zone == ''):
+        if(login_token == '' or event_name == '' or event_date == '' or start_time == '' or start_time_period == '' or time_zone == '' or event_status == ''):
             return Response("Invalid data.", mimetype="text/plain", status=403)
     except KeyError:
         traceback.print_exc()
