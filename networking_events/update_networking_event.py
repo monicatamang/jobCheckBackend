@@ -17,8 +17,8 @@ def update_networking_event():
         end_time_period = request.json.get('endTimePeriod')
         time_zone = request.json.get('timeZone')
         event_type = request.json.get('eventType')
-        event_location = request.json.get('location')
-        event_status = request.json.get('status')
+        event_location = request.json.get('eventLocation')
+        event_status = request.json.get('eventStatus')
         notes = request.json.get('notes')
 
         # If the user sends a login token without content, return a client error response
@@ -69,7 +69,7 @@ def update_networking_event():
         sql += " ne.event_location = ?,"
         data.append(event_location)
     if(event_status != None and event_status != ''):
-        sql += " ne.event_status = ?,"
+        sql += " ne.status = ?,"
         data.append(event_status)
     if(notes != None and notes != ''):
         sql += " ne.notes = ?,"
@@ -103,7 +103,7 @@ def update_networking_event():
                 'timeZone': updated_networking_event_list[0][8],
                 'eventType': updated_networking_event_list[0][9],
                 'eventLocation': updated_networking_event_list[0][10],
-                'status': updated_networking_event_list[0][11],
+                'eventStatus': updated_networking_event_list[0][11],
                 'notes': updated_networking_event_list[0][12]
             }
             # Converting the updated networking event into JSON data

@@ -46,12 +46,12 @@ def search_networking_event():
                 'startTime': result[3],
                 'startTimePeriod': result[4],
                 'endTime': result[5],
-                'endTimePeriod': result[5],
-                'timeZone': result[6],
-                'eventType': result[7],
-                'eventLocation': result[8],
-                'status': result[9],
-                'notes': result[10]
+                'endTimePeriod': result[6],
+                'timeZone': result[7],
+                'eventType': result[8],
+                'eventLocation': result[9],
+                'eventStatus': result[10],
+                'notes': result[11]
             }
             search_results.append(each_result)
         # Convert data into JSON
