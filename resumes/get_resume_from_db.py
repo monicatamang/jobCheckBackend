@@ -5,7 +5,7 @@ import json
 
 # Creating a function that gets the user's resume file data from the database
 def get_resume_file():
-    # Trying to get the user's login token and 
+    # Trying to get the user's login token and job application id
     try:
         login_token = request.headers['Login-Token']
         job_app_id = int(request.args['jobAppId'])
@@ -24,7 +24,7 @@ def get_resume_file():
         return Response("Sorry, something went wrong. Please try again.", mimetype="text/plain", status=400)
 
     # Getting the user's resume file data from the database given the login token and job application id
-    resume_file_list = dbstatements.run_select_statement("SELECT r.user_id, r.job_app_id, r.resume_file, r.created_at FROM user_session us INNER JOIN resume r ON r.user_id = us.user_id WHERE us.token = ? AND job_app_id = ?", [login_token, job_app_id])
+    resume_file_list = dbstatements.run_select_statement("SELECT r.user_id, r.job_app_id, r.resume_file, r.created_at FROM user_session us INNER JOIN resume r ON r.user_id = us.user_id WHERE us.token = ? AND r.job_app_id = ?", [login_token, job_app_id])
 
     # If the resume file data is retrieved from the database, send the data as a dictionary
     if(len(resume_file_list) == 1):

@@ -8,7 +8,7 @@ from job_references import get_job_reference, create_job_reference, update_job_r
 from networking_events import get_networking_event, create_networking_event, update_networking_event, delete_networking_event
 from networking_connections import get_connection, create_connection, update_connection, delete_connection
 from resumes import upload_resume, delete_resume, download_resume, get_resume_from_db
-from cover_letters import upload_cover_letter, delete_cover_letter, download_cover_letter
+from cover_letters import upload_cover_letter, delete_cover_letter, download_cover_letter, get_cover_letter_from_db
 from search import search_job_app, search_interview, search_networking_event, search_job_reference
 import sys
 
@@ -186,6 +186,11 @@ def call_download_resume_file(name):
 @app.get("/api/resume-file")
 def call_get_resume_file():
     return get_resume_from_db.get_resume_file()
+
+# Creating a GET request that will get the user's cover letter file data from the database
+@app.get("/api/cover-letter-file")
+def call_get_cover_letter_file():
+    return get_cover_letter_from_db.get_cover_letter_file()
 
 # Creating a POST request that will allow user's to upload their cover letter
 @app.post("/api/upload-cover-letter")
