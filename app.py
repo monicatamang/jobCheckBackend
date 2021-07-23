@@ -17,6 +17,13 @@ app = Flask(__name__)
 # Limiting the maximum allowed payload to be 10MB
 app.config['MAX_CONTENT_LENGTH'] = 10 * 1000 * 1000
 
+# Initializing a folder to store all users' resumes and cover letters
+RESUME_UPLOAD_FOLDER = 'resume_uploads/'
+COVER_LETTER_UPLOAD_FOLDER = 'cover_letter_uploads/'
+
+# Setting a limit on the types of text files users can send
+ALLOWED_EXTENSIONS = {'pdf', 'docx', 'pages', 'txt'}
+
 # Creating a POST request that will sign up a user
 @app.post("/api/users")
 def call_signup_user():

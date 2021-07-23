@@ -5,10 +5,7 @@ import traceback
 import dbstatements
 import json
 import secrets
-
-# Initializing a folder to store all users' resumes and setting a limit on the types of text files users can send
-UPLOAD_FOLDER = 'resume_uploads/'
-ALLOWED_EXTENSIONS = {'pdf', 'docx', 'pages', 'txt'}
+from app import RESUME_UPLOAD_FOLDER, ALLOWED_EXTENSIONS
 
 # Checking to see if the file is valid
 def allowed_file(filename):
@@ -29,7 +26,7 @@ def store_resume_file():
         filename = secure_filename(file.filename)
         filename = secrets.token_hex(10) + "_" + filename
         # Saving the user's resume to the folder
-        file.save(os.path.join(UPLOAD_FOLDER, filename))
+        file.save(os.path.join(RESUME_UPLOAD_FOLDER, filename))
         return db_upload_resume(filename)
     
 # Creating a function that will upload the user's resume to the database

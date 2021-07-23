@@ -1,6 +1,9 @@
+from _typeshed import StrOrBytesPath
 from flask import request, Response
 import traceback
 import dbstatements
+import os
+from app import RESUME_UPLOAD_FOLDER
 
 # Creating a function that deletes a user's cover letter
 def delete_cover_letter_file():
@@ -22,12 +25,26 @@ def delete_cover_letter_file():
         traceback.print_exc()
         return Response("Sorry, something went wrong. Please try again.", mimetype="text/plain", status=400)
 
-    # Checking to see if the user's cover letter is deleted from the database
-    row_count = dbstatements.run_delete_statement("DELETE cv FROM user_session us INNER JOIN cover_letter cv ON cv.user_id = us.user_id WHERE us.token = ? AND cv.id = ?", [login_token, cover_letter_id])
+    # Getting the cover letter file from the database given the login token and cover letter id
+    cover_letter_file_list = dbstatements.run_select_statement("SELECT cl.cover_letter_file FROM user_session us INNER JOIN cover_letter cl ON cv.user_id = us.user_id WHERE us.token = ? AND cl.id = ?", [login_token, cover_letter_id])
 
-    # If the cover letter is deleted from the database, send a client success response
-    if(row_count == 1):
-        return Response(status=204)
-    # If the cover letter is not deleted from the database, send a server error response
+    # If the resume file is retrieved from the database, check to see fi the user's cover letter exists in the 'cover_letter_upload' folder
+    if(len(cover_letter_file_list) == 1):
+        filename = os.path.join(RESUME_UPLOAD_FOLDER, cover_letter_file_list[0][0])
+        # If the user's cover letter exists in the folder, remove the resume from the folder and database
+        if(os.path.exists(filename)):
+            os.remove(filename)
+            # Checking to see if the user's cover letter is deleted from the database
+            row_count = dbstatements.run_delete_statement("DELETE cl FROM user_session us INNER JOIN cover_letter cl ON cv.user_id = us.user_id WHERE us.token = ? AND cl.id = ?", [login_token, cover_letter_id])
+            # If the cover letter is deleted from the database, send a client success response
+            if(row_count == 1):
+                return Response(status=204)
+            # If the cover letter is not deleted from the database, send a server error response
+            else:
+                return Response("Failed to delete cover letter.", mimetype="text/plain", status=500)
+        # If the user's cover letter does not exist in the folder, send a server error response
+        else:
+            return Response("Cover letter does not exist.", mimetype="text/plain", status=500)
+    # If the cover letter file is not retrieved from the database, send a client error response
     else:
-        return Response("Failed to delete cover letter.", mimetype="text/plain", status=500)
+        return Response("User is not logged in.", mimetype="text/plain", status=403)
