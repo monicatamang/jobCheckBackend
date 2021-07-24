@@ -64,9 +64,9 @@ def db_upload_cover_letter(filename):
             return Response("Failed to upload resume.", mimetype="text/plain", status=500)
         # If a new cover letter id is created, get the cover letter creation date from the database
         else:
-            cl_created_At = dbstatements.run_select_statement("SELECT created_at FROM cover_letter WHERE id = ?", [cover_letter_id,])
+            cl_created_At_list = dbstatements.run_select_statement("SELECT created_at FROM cover_letter WHERE id = ?", [cover_letter_id,])
             # If the cover letter creation date is not retrieved from the database, send a server error response
-            if(cl_created_At == None):
+            if(cl_created_At_list == None):
                 return Response("Something went wrong. Please refresh the page.", mimetype="text/plain", status=500)
             # If the cover letter creation date is retrieved from the database, send the user's cover letter data as a dictionary
             else:
@@ -75,7 +75,7 @@ def db_upload_cover_letter(filename):
                     'coverLetterId': cover_letter_id,
                     'jobAppId': job_app_id,
                     'resumeFile': filename,
-                    'createdAt': cl_created_At
+                    'createdAt': cl_created_At_list[0][0]
                 }
                 # Converting the user's cover letter data into JSON data
                 user_cover_letter_file_json = json.dumps(user_cover_letter_file, default=str)
