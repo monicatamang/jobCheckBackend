@@ -41,7 +41,7 @@ def update_job_ref():
     # If the user sends one piece of information about their job reference, add their information to the UPDATE statement as a column and append the column value to the list
 
     if(name != None and name != ''):
-        sql += " jr.name = ?,"
+        sql += " jr.reference_name = ?,"
         data.append(name)
     if(position != None and position != ''):
         sql += " jr.position = ?,"

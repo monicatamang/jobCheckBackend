@@ -24,12 +24,13 @@ def get_resume_file():
         return Response("Sorry, something went wrong. Please try again.", mimetype="text/plain", status=400)
 
     # Getting the user's resume file data from the database given the login token and job application id
-    resume_file_list = dbstatements.run_select_statement("SELECT r.user_id, r.job_app_id, r.resume_file, r.created_at FROM user_session us INNER JOIN resume r ON r.user_id = us.user_id WHERE us.token = ? AND r.job_app_id = ?", [login_token, job_app_id])
+    resume_file_list = dbstatements.run_select_statement("SELECT r.user_id, r.job_app_id, r.resume_file, r.created_at, r.id FROM user_session us INNER JOIN resume r ON r.user_id = us.user_id WHERE us.token = ? AND r.job_app_id = ?", [login_token, job_app_id])
 
     # If the resume file data is retrieved from the database, send the data as a dictionary
     if(len(resume_file_list) == 1):
         resume_file = {
             'userId': resume_file_list[0][0],
+            'resumeId': resume_file_list[0][4],
             'jobAppId': resume_file_list[0][1],
             'resumeFile': resume_file_list[0][2],
             'createdAt': resume_file_list[0][3]

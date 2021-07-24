@@ -24,12 +24,13 @@ def get_cover_letter_file():
         return Response("Sorry, something went wrong. Please try again.", mimetype="text/plain", status=400)
 
     # Getting the user's cover letter file data from the database given the login token and job application id
-    cover_letter_file_list = dbstatements.run_select_statement("SELECT cl.user_id, cl.job_app_id, cl.resume_file, cl.created_at FROM user_session us INNER JOIN cover_letter cl ON cl.user_id = us.user_id WHERE us.token = ? AND cl.job_app_id = ?", [login_token, job_app_id])
+    cover_letter_file_list = dbstatements.run_select_statement("SELECT cl.user_id, cl.job_app_id, cl.resume_file, cl.created_at, cl.id FROM user_session us INNER JOIN cover_letter cl ON cl.user_id = us.user_id WHERE us.token = ? AND cl.job_app_id = ?", [login_token, job_app_id])
 
     # If the resume file data is retrieved from the database, send the data as a dictionary
     if(len(cover_letter_file_list) == 1):
         cover_letter_file = {
             'userId': cover_letter_file_list[0][0],
+            'coverLetterId': cover_letter_file_list[0][4],
             'jobAppId': cover_letter_file_list[0][1],
             'coverLetterFile': cover_letter_file_list[0][2],
             'createdAt': cover_letter_file_list[0][3]
