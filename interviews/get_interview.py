@@ -9,10 +9,14 @@ def get_interviews():
     try:
         user_id = int(request.args['userId'])
         job_app_id = request.args.get('jobAppId')
+        interview_id = request.args.get('interviewId')
 
-        # If the user does send an interview id, convert it into an integer
+        # If the user does send a job application id, convert it into an integer
         if(job_app_id != None and job_app_id != ''):
             job_app_id = int(job_app_id)
+        # If the user does send a interview id, convert it into an integer
+        if(interview_id != None and interview_id != ''):
+            interview_id = int(interview_id)
     except ValueError:
         traceback.print_exc()
         return Response("Invalid data.", mimetype="text/plain", status=400)
@@ -23,12 +27,15 @@ def get_interviews():
         traceback.print_exc()
         return Response("Sorry, something went wrong. Please try again.", mimetype="text/plain", status=400)
 
-    # If the user does not send an interview id, get all interviews that belong to the user id
-    if(job_app_id == None):
+    # If the user does not send a job application id or an interview id, get all interviews that belong to the user id
+    if(job_app_id == None and interview_id == None):
         interviews = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? ORDER BY i.created_at DESC", [user_id,])
-    # If the user does send an interview id, get the interview that belongs the user id and has the interview id
-    else:
+    # If the user does send an job application id, get the interviews that belong to the user id and job application id
+    elif(job_app_id != None):
         interviews = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? AND ja.id = ? ORDER BY i.created_at DESC", [user_id, job_app_id])
+    # If the user does send an interview id, get the interview that belongs to the user id and has the interview id
+    elif(interview_id != None):
+        interviews = dbstatements.run_select_statement("SELECT ja.id, ja.company, ja.job_position, i.interview_date, i.interview_time, i.interview_time_period, i.interview_time_zone, i.interview_type, i.interview_location, i.notes, i.id FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.user_id = ? AND i.id = ? ORDER BY i.created_at DESC", [user_id, interview_id])
 
     # If the user's interviews are not retrieved from the database, send a server error response
     if(interviews == None):
