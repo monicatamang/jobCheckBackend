@@ -39,11 +39,16 @@ def create_interview():
         # If a new interview id is not created, send a server error response
         if(interview_id == None):
             return Response("Failed to create an interview.", mimetype="text/plain", status=500)
-        # If a new interview id is created, send the new interview as a dictionary
+        # If a new interview id is created, get the company and position the user is interviewing for
         else:
-            new_interview = {
+            get_company_and_position = dbstatements.run_select_statement("SELECT ja.company, ja.job_position FROM job_application ja INNER JOIN interview i ON i.job_app_id = ja.id WHERE i.id = ?", [interview_id,])
+            # If the company and position is retrieved from the database, send the new interview as a dictionary
+            if(len(get_company_and_position) == 1):
+                new_interview = {
                 'interviewId': interview_id,
                 'jobAppId': job_app_id,
+                'company': get_company_and_position[0][0],
+                'jobPosition': get_company_and_position[0][1],
                 'interviewDate': interview_date,
                 'interviewTime': interview_time,
                 'interviewTimePeriod': interview_time_period,
@@ -52,10 +57,13 @@ def create_interview():
                 'interviewLocation': interview_location,
                 'notes': notes
             }
-            # Converting the new interview into JSON data
-            new_interview_json = json.dumps(new_interview, default=str)
-            # Sending a client success response with the JSON data
-            return Response(new_interview_json, mimetype="application/json", status=201)
+                # Converting the new interview into JSON data
+                new_interview_json = json.dumps(new_interview, default=str)
+                # Sending a client success response with the JSON data
+                return Response(new_interview_json, mimetype="application/json", status=201)
+            # If the company and position is not retrieved from the database, send a server error response
+            else:
+                return Response("Something went wrong. Please refresh the page.", mimetype="text/plain", status=500)
     # If the user's id is not retrieved from the database, send a client error response
     else:
         return Response("User is not logged in.", mimetype="text/plain", status=403)
