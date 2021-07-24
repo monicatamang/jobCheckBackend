@@ -39,6 +39,6 @@ def get_resume_file():
         resume_file_json = json.dumps(resume_file, default=str)
         # Sending a client success response with the JSON data
         return Response(resume_file_json, mimetype="application/json", status=200)
-    # If the resume file data is not retrieved from the database, send a client error response
+    # If the resume file data does not exist, send a client success response
     else:
-        return Response("Failed to get resume file.", mimetype="text/plain", status=403)
+        return Response(status=204)

@@ -39,6 +39,6 @@ def get_cover_letter_file():
         cover_letter_file_json = json.dumps(cover_letter_file, default=str)
         # Sending a client success response with the JSON data
         return Response(cover_letter_file_json, mimetype="application/json", status=200)
-    # If the cover letter file data is not retrieved from the database, send a client error response
+    # If the cover letter file data is does not exists, send a client success response
     else:
-        return Response("Failed to get cover letter file.", mimetype="text/plain", status=403)
+        return Response(status=204)
