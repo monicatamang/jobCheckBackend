@@ -5,8 +5,8 @@ dbcreds.py
 .vscode/
 
 # Resume & Cover Letter Files
-resume_uploads/
-cover_letter_uploads/
+resume_uploads/*
+cover_letter_uploads/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
